@@ -1,0 +1,174 @@
+//Paging Simulation Using FIFO
+
+
+importjava.util.*;
+publicclassFifo{
+publicstaticvoidmain(String[]args){
+Scannersn=newScanner(System.in);
+System.out.println("Enter Frame size ");
+intfr=sn.nextInt();
+intframe[]=newint[fr];
+System.out.println("Enter how many pages you want to enter");
+intpg=sn.nextInt();
+intpages[]=newint[pg];
+System.out.println("Enter pages you want:");
+for(inti=0;i<pg;i++)
+{
+pages[i]=sn.nextInt();
+}
+inthits=0;
+intfaults=0;
+intj=0;
+booleancheck;
+for(inti=0;i<pg;i++)
+{
+check=false;
+for(intk=0;k<fr;k++)
+if(frame[k]==pages[i]){
+check=true;
+hits=hits+1;
+}
+if(check==false)
+{
+frame[j]=pages[i];
+j++;
+if(j>=fr)
+j=0;
+faults=faults+1;
+}
+}
+System.out.println("Hits="+hits+"Hitsra=”+hitsra+”\nFaults="+faults+"Faultsra=");
+}	
+}
+
+
+LRU
+
+
+importjava.util.ArrayList;
+importjava.util.Scanner;
+publicclassLru
+{
+publicstaticvoidmain(Stringagrs[])
+{
+Scannersn=newScanner(System.in);
+System.out.print("\nEnter How Many Frames You Want :");
+intframe=sn.nextInt();
+System.out.print("How Many Pages You Want :");
+intpg=sn.nextInt();
+System.out.print("\nEnter Pages");
+intpages[]=newint[pg];
+for(inti=0;i<pg;i++)
+{
+pages[i]=sn.nextInt();
+}
+ArrayList<Integer>s=newArrayList<>(frame);
+intcount=0,pagefault=0;
+for(inti:pages)
+{
+if(!s.contains(i))
+{
+if(s.size()==frame)
+{
+s.remove(0);
+s.add(frame-1,i);
+}
+else
+{
+s.add(count,i);
+count++;
+}
+pagefault++;
+}else
+{
+s.remove((Object)i);
+s.add(s.size(),i);
+}
+}
+System.out.print("Page Fault :"+pagefault);
+//System.out.println("Page Hits:"+ pagehit);
+}
+}
+
+
+Optimal
+
+importjava.util.*;
+importjava.io.*;
+publicclassOptimal{
+publicstaticvoidmain(Stringargs[])throwsIOException{
+Scannersn=newScanner(System.in);
+intnumberOfFrames,numberOfPages,flag1,flag2,flag3,i,j,k,pos=0,max,hit=0;
+intfaults=0;
+inttemp[]=newint[10];
+System.out.println("Enter number of Frames: ");
+numberOfFrames=sn.nextInt();
+intframe[]=newint[numberOfFrames];
+System.out.println("Enter number of Pages: ");
+numberOfPages=sn.nextInt();
+intpages[]=newint[numberOfPages];
+System.out.println("Enter the pages: ");
+for(i=0;i<numberOfPages;i++)
+pages[i]=sn.nextInt();
+for(i=0;i<numberOfFrames;i++)
+frame[i]=-1;
+for(i=0;i<numberOfPages;++i){
+flag1=flag2=0;
+for(j=0;j<numberOfFrames;++j){
+if(frame[j]==pages[i]){
+flag1=flag2=1;
+hit++;
+break;
+}
+}
+if(flag1==0){
+for(j=0;j<numberOfFrames;++j){
+if(frame[j]==-1){
+faults++;
+frame[j]=pages[i];
+flag2=1;
+break;
+}
+}
+}
+if(flag2==0){
+flag3=0;
+for(j=0;j<numberOfFrames;++j){
+temp[j]=-1;
+for(k=i+1;k<numberOfPages;++k){
+if(frame[j]==pages[k]){
+temp[j]=k;
+break;
+}
+}
+}
+for(j=0;j<numberOfFrames;++j){
+if(temp[j]==-1){
+pos=j;
+flag3=1;
+break;
+}
+}
+if(flag3==0){
+max=temp[0];
+pos=0;
+for(j=1;j<numberOfFrames;++j){
+if(temp[j]>max){
+max=temp[j];
+pos=j;
+}
+}
+}
+frame[pos]=pages[i];
+faults++;
+}
+// System.out.print();
+// for (j = 0; j <numberOfFrames; ++j) {
+// System.out.print("\t" + frame[j]);
+// }
+}
+System.out.println("\n\nTotal Page Faults: "+faults+"Faultsra=+faultsra");
+System.out.println("\n\nTotal Page hits: "+hit+"Hitsra+hitsra");
+}
+}
+
